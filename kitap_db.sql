@@ -12,7 +12,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- kitap_db.diller: 5 rows tablosu için veriler indiriliyor
-DELETE FROM `diller`;
 /*!40000 ALTER TABLE `diller` DISABLE KEYS */;
 INSERT INTO `diller` (`ID`, `dilAdi`) VALUES
 	(1, 'Türkçe'),
@@ -23,7 +22,6 @@ INSERT INTO `diller` (`ID`, `dilAdi`) VALUES
 /*!40000 ALTER TABLE `diller` ENABLE KEYS */;
 
 -- kitap_db.iletisim: 5 rows tablosu için veriler indiriliyor
-DELETE FROM `iletisim`;
 /*!40000 ALTER TABLE `iletisim` DISABLE KEYS */;
 INSERT INTO `iletisim` (`id`, `eposta`, `konu`, `mesaj`, `tarihSaat`, `ip`, `goruldu`) VALUES
 	(3, 'test@test.com', 'Konulardan bir konu', 'Mesajlardan bir mesaj', '2022-05-20 10:45:31', '45.45.67.89', 0),
@@ -34,7 +32,6 @@ INSERT INTO `iletisim` (`id`, `eposta`, `konu`, `mesaj`, `tarihSaat`, `ip`, `gor
 /*!40000 ALTER TABLE `iletisim` ENABLE KEYS */;
 
 -- kitap_db.kitaplar: 100 rows tablosu için veriler indiriliyor
-DELETE FROM `kitaplar`;
 /*!40000 ALTER TABLE `kitaplar` DISABLE KEYS */;
 INSERT INTO `kitaplar` (`ID`, `adi`, `yazarID`, `dilID`, `sayfaSayisi`, `yayineviID`, `ozet`, `yayinTarihi`, `resim`) VALUES
 	(1, 'molestie quis lobortis Etiam', 19, 2, 208, 10, 'Curabitur in ante Vivamus erat tempor id sagittis lectus mollis sollicitudin gravida elit sem In Donec eget tincidunt ut tortor tempus eget eu ac consectetur a sit nunc porta nibh leo sit Aenean viverra ornare lobortis mi amet at Vivamus amet eu fringilla', '2023-01-26', '1.jpg'),
@@ -140,7 +137,6 @@ INSERT INTO `kitaplar` (`ID`, `adi`, `yazarID`, `dilID`, `sayfaSayisi`, `yayinev
 /*!40000 ALTER TABLE `kitaplar` ENABLE KEYS */;
 
 -- kitap_db.turler: 10 rows tablosu için veriler indiriliyor
-DELETE FROM `turler`;
 /*!40000 ALTER TABLE `turler` DISABLE KEYS */;
 INSERT INTO `turler` (`ID`, `turAdi`, `Sira`) VALUES
 	(1, 'Roman', 1),
@@ -156,7 +152,6 @@ INSERT INTO `turler` (`ID`, `turAdi`, `Sira`) VALUES
 /*!40000 ALTER TABLE `turler` ENABLE KEYS */;
 
 -- kitap_db.turlertokitaplar: 200 rows tablosu için veriler indiriliyor
-DELETE FROM `turlertokitaplar`;
 /*!40000 ALTER TABLE `turlertokitaplar` DISABLE KEYS */;
 INSERT INTO `turlertokitaplar` (`ID`, `turID`, `kitapID`) VALUES
 	(1, 10, 1),
@@ -362,14 +357,12 @@ INSERT INTO `turlertokitaplar` (`ID`, `turID`, `kitapID`) VALUES
 /*!40000 ALTER TABLE `turlertokitaplar` ENABLE KEYS */;
 
 -- kitap_db.user: 1 rows tablosu için veriler indiriliyor
-DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `password`) VALUES
 	(1, 'admin', '1234');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 -- kitap_db.yayinevleri: 15 rows tablosu için veriler indiriliyor
-DELETE FROM `yayinevleri`;
 /*!40000 ALTER TABLE `yayinevleri` DISABLE KEYS */;
 INSERT INTO `yayinevleri` (`ID`, `yayineviAdi`, `adres`, `tel`, `sira`) VALUES
 	(1, 'eget ullamcorper', 'Adres', '550 582 90 73', 47),
@@ -390,7 +383,6 @@ INSERT INTO `yayinevleri` (`ID`, `yayineviAdi`, `adres`, `tel`, `sira`) VALUES
 /*!40000 ALTER TABLE `yayinevleri` ENABLE KEYS */;
 
 -- kitap_db.yazarlar: 50 rows tablosu için veriler indiriliyor
-DELETE FROM `yazarlar`;
 /*!40000 ALTER TABLE `yazarlar` DISABLE KEYS */;
 INSERT INTO `yazarlar` (`ID`, `adi`, `soyadi`, `dogumTarihi`, `dogumYeri`, `cinsiyeti`) VALUES
 	(1, 'Hıfzullah', 'Çilesiz', '2022-08-03', 'Maldiv Adaları', 1),

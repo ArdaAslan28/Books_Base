@@ -11,6 +11,18 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
+
+-- kitap_db için veritabanı yapısı dökülüyor
+CREATE DATABASE IF NOT EXISTS `kitap_db` /*!40100 DEFAULT CHARACTER SET latin5 */;
+USE `kitap_db`;
+
+-- tablo yapısı dökülüyor kitap_db.diller
+CREATE TABLE IF NOT EXISTS `diller` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `dilAdi` char(50) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin5;
+
 -- kitap_db.diller: 5 rows tablosu için veriler indiriliyor
 /*!40000 ALTER TABLE `diller` DISABLE KEYS */;
 INSERT INTO `diller` (`ID`, `dilAdi`) VALUES
@@ -21,6 +33,18 @@ INSERT INTO `diller` (`ID`, `dilAdi`) VALUES
 	(5, 'Fransızca');
 /*!40000 ALTER TABLE `diller` ENABLE KEYS */;
 
+-- tablo yapısı dökülüyor kitap_db.iletisim
+CREATE TABLE IF NOT EXISTS `iletisim` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `eposta` varchar(100) NOT NULL,
+  `konu` varchar(150) NOT NULL,
+  `mesaj` varchar(600) NOT NULL,
+  `tarihSaat` datetime NOT NULL,
+  `ip` char(50) NOT NULL,
+  `goruldu` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin5;
+
 -- kitap_db.iletisim: 5 rows tablosu için veriler indiriliyor
 /*!40000 ALTER TABLE `iletisim` DISABLE KEYS */;
 INSERT INTO `iletisim` (`id`, `eposta`, `konu`, `mesaj`, `tarihSaat`, `ip`, `goruldu`) VALUES
@@ -30,6 +54,20 @@ INSERT INTO `iletisim` (`id`, `eposta`, `konu`, `mesaj`, `tarihSaat`, `ip`, `gor
 	(6, 'tete@sdfg.com', 'retyr', 'rtyrty', '2022-05-25 09:22:29', '192.25.25.36', 0),
 	(7, 'tert@dfg.com', 'fasdfasdf', 'dfgsdf gsdfg sdfg', '2022-05-26 14:45:05', '192.25.25.36', 0);
 /*!40000 ALTER TABLE `iletisim` ENABLE KEYS */;
+
+-- tablo yapısı dökülüyor kitap_db.kitaplar
+CREATE TABLE IF NOT EXISTS `kitaplar` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `adi` char(200) CHARACTER SET latin5 NOT NULL,
+  `yazarID` int(11) NOT NULL DEFAULT '1',
+  `dilID` int(11) NOT NULL DEFAULT '1',
+  `sayfaSayisi` int(11) NOT NULL DEFAULT '1',
+  `yayineviID` int(11) NOT NULL DEFAULT '1',
+  `ozet` varchar(5000) CHARACTER SET latin5 NOT NULL,
+  `yayinTarihi` date NOT NULL,
+  `resim` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=201 DEFAULT CHARSET=latin1;
 
 -- kitap_db.kitaplar: 100 rows tablosu için veriler indiriliyor
 /*!40000 ALTER TABLE `kitaplar` DISABLE KEYS */;
@@ -136,6 +174,14 @@ INSERT INTO `kitaplar` (`ID`, `adi`, `yazarID`, `dilID`, `sayfaSayisi`, `yayinev
 	(100, 'laoreet dictum euismod vitae', 25, 2, 150, 2, 'porttitor a at Vestibulum ipsum nisi nibh posuere sem tortor urna malesuada vulputate mauris massa neque feugiat rutrum ultricies porttitor augue id mollis et sodales a et vulputate sagittis tempor Pellentesque est aliquam Sed non non enim interdum venenatis libero fermentum a quis hendrerit ut quis gravida Sed vitae lectus risus eget rhoncus accumsan bibendum quis feugiat sed dictum', '2022-01-03', '5.jpg');
 /*!40000 ALTER TABLE `kitaplar` ENABLE KEYS */;
 
+-- tablo yapısı dökülüyor kitap_db.turler
+CREATE TABLE IF NOT EXISTS `turler` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `turAdi` char(50) NOT NULL,
+  `Sira` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
 -- kitap_db.turler: 10 rows tablosu için veriler indiriliyor
 /*!40000 ALTER TABLE `turler` DISABLE KEYS */;
 INSERT INTO `turler` (`ID`, `turAdi`, `Sira`) VALUES
@@ -150,6 +196,14 @@ INSERT INTO `turler` (`ID`, `turAdi`, `Sira`) VALUES
 	(9, 'Kurgu', 1),
 	(10, 'Arda', 25);
 /*!40000 ALTER TABLE `turler` ENABLE KEYS */;
+
+-- tablo yapısı dökülüyor kitap_db.turlertokitaplar
+CREATE TABLE IF NOT EXISTS `turlertokitaplar` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `turID` int(11) NOT NULL DEFAULT '1',
+  `kitapID` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=202 DEFAULT CHARSET=latin1;
 
 -- kitap_db.turlertokitaplar: 200 rows tablosu için veriler indiriliyor
 /*!40000 ALTER TABLE `turlertokitaplar` DISABLE KEYS */;
@@ -356,11 +410,29 @@ INSERT INTO `turlertokitaplar` (`ID`, `turID`, `kitapID`) VALUES
 	(201, 10, 14);
 /*!40000 ALTER TABLE `turlertokitaplar` ENABLE KEYS */;
 
+-- tablo yapısı dökülüyor kitap_db.user
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin5;
+
 -- kitap_db.user: 1 rows tablosu için veriler indiriliyor
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `password`) VALUES
 	(1, 'admin', '1234');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+
+-- tablo yapısı dökülüyor kitap_db.yayinevleri
+CREATE TABLE IF NOT EXISTS `yayinevleri` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `yayineviAdi` char(200) NOT NULL,
+  `adres` varchar(150) NOT NULL,
+  `tel` char(13) NOT NULL,
+  `sira` int(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin5;
 
 -- kitap_db.yayinevleri: 15 rows tablosu için veriler indiriliyor
 /*!40000 ALTER TABLE `yayinevleri` DISABLE KEYS */;
@@ -381,6 +453,17 @@ INSERT INTO `yayinevleri` (`ID`, `yayineviAdi`, `adres`, `tel`, `sira`) VALUES
 	(14, 'nec', 'Adres', '598 197 50 95', 20),
 	(15, 'quis', 'Adres', '555 104 22 34', 20);
 /*!40000 ALTER TABLE `yayinevleri` ENABLE KEYS */;
+
+-- tablo yapısı dökülüyor kitap_db.yazarlar
+CREATE TABLE IF NOT EXISTS `yazarlar` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `adi` char(100) NOT NULL,
+  `soyadi` char(100) NOT NULL,
+  `dogumTarihi` date NOT NULL,
+  `dogumYeri` char(100) NOT NULL,
+  `cinsiyeti` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=latin5;
 
 -- kitap_db.yazarlar: 50 rows tablosu için veriler indiriliyor
 /*!40000 ALTER TABLE `yazarlar` DISABLE KEYS */;

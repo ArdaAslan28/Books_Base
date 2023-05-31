@@ -89,27 +89,63 @@ public class AdminController : Controller
 
 
     [HttpGet]
-    public IActionResult TurEkle()
+    [Route("/Admin/TurForm/{turId?}")]
+    public IActionResult TurForm(int? turId)
     {
+        if (turId != null)
+        {
+            TurlerVM duzenlenecekTur = (from x in db.Turlers
+                                        where x.Id == turId
+                                        select new TurlerVM
+                                        {
+                                            Id = x.Id,
+                                            Sira = x.Sira,
+                                            TurAdi = x.TurAdi
+                                        }).FirstOrDefault();
+
+            ViewBag.Pagetitle = "Tür Düzenle";
+            return View(duzenlenecekTur);
+        }
+        else if (turId == null)
+        {
+            ViewBag.Pagetitle = "Tür Ekle";
+        }
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> TurEkle(TurlerVM gelenData)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> TurForm(TurlerVM gelenData)
     {
-        Turler yeniTur = new Turler
+        if (!ModelState.IsValid)
         {
-            TurAdi = gelenData.TurAdi,
-            Sira = gelenData.Sira,
-        };
+            return View(gelenData);
+        }
+        if (gelenData.Id != 0)
+        {
+            Turler duzenlenecekTur = db.Turlers.Find(gelenData.Id);
+            if (duzenlenecekTur != null)
+            {
+                duzenlenecekTur.Sira = gelenData.Sira;
+                duzenlenecekTur.TurAdi = gelenData.TurAdi;
+            }
+        }
+        else if (gelenData.Id == 0)
+        {
+            Turler yeniTur = new Turler
+            {
+                TurAdi = gelenData.TurAdi,
+                Sira = gelenData.Sira,
+            };
 
             await db.AddAsync(yeniTur);
-            await db.SaveChangesAsync();
+        }
+        await db.SaveChangesAsync();
 
         return Redirect("/Admin/Turler");
     }
 
-    [Route("/Admin/TurSil/{turId?}")]
+    /*[Route("/Admin/TurSil/{turId?}")]
     [HttpGet]
         public IActionResult TurSil(int? turId)
     {
@@ -132,7 +168,7 @@ public class AdminController : Controller
     [HttpPost]
         public  IActionResult TurSil(TurlerVM gelenData)
     {
-        /*TurlerVM silinecekTur = (from x in db.Turlers
+        TurlerVM silinecekTur = (from x in db.Turlers
         where x.TurAdi == gelenData.TurAdi
         where x.Sira == gelenData.Sira
                             select new TurlerVM
@@ -140,7 +176,7 @@ public class AdminController : Controller
                                 Id = x.Id,
                                 TurAdi = x.TurAdi,
                                 Sira = x.Sira
-                            }).FirstOrDefault();*/
+                            }).FirstOrDefault();
 
         Turler silinecekTur = new Turler
         {
@@ -153,74 +189,124 @@ public class AdminController : Controller
             db.SaveChangesAsync();
 
         return Redirect("/Admin/Turler");
+    }*/
+
+    [Route("/Admin/TurSil/{turId?}")]
+    public async Task<IActionResult> TurSil(int turId)
+    {
+        Turler silinecekTur = db.Turlers.Find(turId);
+        if (silinecekTur != null)
+        {
+            db.Turlers.Remove(silinecekTur);
+            await db.SaveChangesAsync();
+        }
+
+        return Redirect("/Admin/Turler");
     }
 
     [Route("/Admin/User")]
     public IActionResult User()
     {
         List<UserVM> Users = (from x in db.Users
-                                 select new UserVM
-                                 {
-                                     Id = x.Id,
-                                     username = x.Username,
-                                     password = x.Password,
-                                 }).ToList();
+                              select new UserVM
+                              {
+                                  Id = x.Id,
+                                  username = x.Username,
+                                  password = x.Password,
+                              }).ToList();
         return View(Users);
     }
 
     [HttpGet]
-    public IActionResult UserEkle()
+    [Route("/Admin/UserForm/{userId?}")]
+    public IActionResult UserForm(int? userId)
     {
+        if (userId != null)
+        {
+            UserVM duzenlenecekUser = (from x in db.Users
+                                       where x.Id == userId
+                                       select new UserVM
+                                       {
+                                           Id = x.Id,
+                                           username = x.Username,
+                                           password = x.Password,
+                                       }).FirstOrDefault();
+
+            ViewBag.Pagetitle = "User Düzenle";
+            return View(duzenlenecekUser);
+        }
+        else if (userId == null)
+        {
+            ViewBag.Pagetitle = "User Ekle";
+        }
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> UserEkle(UserVM gelenData)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UserForm(UserVM gelenData)
     {
-        User yeniUser = new User
+                if (!ModelState.IsValid)
         {
-            Username = gelenData.username,
-            Password = gelenData.password,
-        };
+            return View(gelenData);
+        }
+        if (gelenData.Id != 0)
+        {
+            User duzenlenecekUser = db.Users.Find(gelenData.Id);
+            if (duzenlenecekUser != null)
+            {
+                duzenlenecekUser.Username = gelenData.username;
+                duzenlenecekUser.Password = gelenData.password;
+            }
+        }
+        else if (gelenData.Id == 0)
+        {
+            User yeniUser = new User
+            {
+                Username = gelenData.username,
+                Password = gelenData.password,
+            };
 
             await db.AddAsync(yeniUser);
-            await db.SaveChangesAsync();
+        }
+        await db.SaveChangesAsync();
 
         return Redirect("/Admin/User");
     }
 
-    [Route("/Admin/UserSil/{userId?}")]
+    /*[Route("/Admin/UserSil/{userId?}")]
     [HttpGet]
-            public IActionResult UserSil(int? userId)
+    public IActionResult UserSil(int? userId)
     {
         UserVM tur = new UserVM();
         if (userId != null)
         {
             tur = (from x in db.Users
-            where x.Id == userId
-            select new UserVM
-            {
-                Id = x.Id,
-                username = x.Username,
-                password = x.Password
-            }
+                   where x.Id == userId
+                   select new UserVM
+                   {
+                       Id = x.Id,
+                       username = x.Username,
+                       password = x.Password
+                   }
             ).FirstOrDefault();
         }
         return View(tur);
     }
 
+
     [HttpPost]
-        public async Task<IActionResult> UserSil(UserVM gelenData)
+    public async Task<IActionResult> UserSil(UserVM gelenData)
     {
-        /*TurlerVM silinecekTur = (from x in db.Turlers
-        where x.TurAdi == gelenData.TurAdi
-        where x.Sira == gelenData.Sira
-                            select new TurlerVM
-                            {
-                                Id = x.Id,
-                                TurAdi = x.TurAdi,
-                                Sira = x.Sira
-                            }).FirstOrDefault();*/
+        //TurlerVM silinecekTur = (from x in db.Turlers
+        //where x.TurAdi == gelenData.TurAdi
+        //where x.Sira == gelenData.Sira
+        //                    select new TurlerVM
+        //                    {
+        //                        Id = x.Id,
+        //                        TurAdi = x.TurAdi,
+        //                        Sira = x.Sira
+        //                    }).FirstOrDefault();
 
         User silinecekUser = new User
         {
@@ -229,8 +315,21 @@ public class AdminController : Controller
             Password = gelenData.password,
         };
 
-            db.Remove(silinecekUser);
+        db.Remove(silinecekUser);
+        await db.SaveChangesAsync();
+
+        return Redirect("/Admin/User");
+    }*/
+
+        [Route("/Admin/UserSil/{userId?}")]
+    public async Task<IActionResult> UserSil(int userId)
+    {
+        User silinecekUser = db.Users.Find(userId);
+        if (silinecekUser != null)
+        {
+            db.Users.Remove(silinecekUser);
             await db.SaveChangesAsync();
+        }
 
         return Redirect("/Admin/User");
     }

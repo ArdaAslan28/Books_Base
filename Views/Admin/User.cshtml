@@ -30,7 +30,9 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <a class="far fa-solid fa-trash h5 btn btn-primary" href="/Admin/UserEkle"> User Ekle</a>
+                        <a class="h5 btn btn-primary" href="/Admin/UserForm"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+</svg> User Ekle</a>
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered">
@@ -53,8 +55,8 @@
                                         </td>
                                         <td>
                                             <div class="row">
-                                                <a class="btn btn-primary far fa-edit btn-sm mx-1"></a>
-                                                <a class="btn btn-danger btn-sm mx-1" href="/Admin/UserSil/@user.Id"> <svg xmlns="http://www.w3.org/2000/svg"
+                                                <a class="btn btn-primary far fa-edit btn-sm mx-1" href="/Admin/UserForm/@user.Id"></a>
+                                                <a class="btn btn-danger btn-sm mx-1" onclick="ConfirmDelete(id=@user.Id)" href="#"> <svg xmlns="http://www.w3.org/2000/svg"
                                                         width="16" height="16" fill="currentColor" class="bi bi-trash"
                                                         viewBox="0 0 16 16">
                                                         <path
@@ -76,3 +78,19 @@
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
+
+<script type="text/javascript">
+    function ConfirmDelete(id) {
+        Swal.fire({
+            title: 'Confirm Delete',
+            text: 'Silmek istediğinden emin misin?',
+            icon: 'warning',
+            confirmButtonText: 'Sil',
+            showCancelButton: true
+        }).then((value) => {
+            if (value.isConfirmed) {
+                window.location.replace("/Admin/UserSil/" + id);
+            }
+        })
+    }
+</script>
